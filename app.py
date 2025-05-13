@@ -16,7 +16,11 @@ login_manager.login_view = 'login'
 # --- IMPORTOK ---
 from user_auth_admin import *
 from routes.partners import *
-from routes.form_definitions import *
+from routes.form_definitions import init_form_routes
+
+# az app példány létrehozása után:
+init_form_routes(app)
+
 
 if __name__ == '__main__':
     with app.app_context():
