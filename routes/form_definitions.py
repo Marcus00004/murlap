@@ -8,6 +8,6 @@ class FormTemplate(db.Model):
 
 def init_form_routes(app):
     @app.route('/forms')
-    def list_forms_view():
+    def show_form_list():
         forms = FormTemplate.query.all()
         return render_template('forms.html', forms=forms)
