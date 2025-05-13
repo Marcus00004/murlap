@@ -15,8 +15,8 @@ login_manager.login_view = 'login'
 
 # --- IMPORTOK ---
 from user_auth_admin import *
-from partners import *
-from form_definitions import *
+from routes.partners import *
+from routes.form_definitions import *
 
 if __name__ == '__main__':
     with app.app_context():
