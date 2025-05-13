@@ -7,7 +7,7 @@ class FormTemplate(db.Model):
     name = db.Column(db.String(100), nullable=False)
 
 def init_form_routes(app):
-    @app.route('/forms')
+    @app.route('/forms', endpoint='form_list')
     def list_forms():
         forms = FormTemplate.query.all()
         return render_template('forms.html', forms=forms)
