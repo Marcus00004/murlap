@@ -59,4 +59,7 @@ xlrd==2.0.1
 XlsxWriter==3.2.3
 zope.event==5.0
 zope.interface==6.1
-flask_bcrypt
+Flask-Bcrypt==1.0.1
+flask_login==0.6.3
+
+
