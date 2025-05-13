@@ -2,7 +2,7 @@
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin
 from flask_bcrypt import Bcrypt
 from flask import redirect, url_for, session
-from models.user import User
+from app import User
 
 login_manager = LoginManager()
 bcrypt = Bcrypt()
