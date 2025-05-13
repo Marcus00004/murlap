@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Űrlap statisztika</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; padding: 1rem; background-color: #f0f3f6; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        h2 { text-align: center; }
+        form { margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+        input[type="date"], button {
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; }
+        th, td { padding: 0.6rem; border: 1px solid #ddd; }
+        th { background-color: #eee; }
+
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            td { padding: 0.5rem; text-align: right; position: relative; }
+            td::before { content: attr(data-label); position: absolute; left: 0; font-weight: bold; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Űrlap statisztika</h2>
+
+        <form method="get">
+            <input type="date" name="start" value="{{ request.args.get('start', '') }}">
+            <input type="date" name="end" value="{{ request.args.get('end', '') }}">
+            <button type="submit">Szűrés</button>
+        </form>
+
+        <table>
+            <thead><tr>
+                <th>Partner</th>
+                <th>Űrlap</th>
+                <th>Dátum</th>
+                <th>Válaszok száma</th>
+                <th>Átlagpont</th>
+            </tr></thead>
+            <tbody>
+            {% for r in reports %}
+            <tr>
+                <td data-label="Partner">{{ r.partner_name }}</td>
+                <td data-label="Űrlap">{{ r.form_name }}</td>
+                <td data-label="Dátum">{{ r.submitted_at.strftime('%Y.%m.%d %H:%M') }}</td>
+                <td data-label="Válaszok száma">{{ r.answer_count }}</td>
+                <td data-label="Átlag">{{ '%.1f' % r.avg_score }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

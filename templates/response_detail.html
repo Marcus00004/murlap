@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Űrlap részletei</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f6f8;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        h2, h3 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .label {
+            font-weight: bold;
+        }
+        .score {
+            font-size: 1.1em;
+            color: #333;
+        }
+        .comment {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #555;
+        }
+        .export-button {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+        .export-button a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .export-button {
+                text-align: center;
+            }
+            .export-button a {
+                width: 100%;
+                display: block;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="export-button">
+            <a href="{{ url_for('export_excel', response_id=response.id) }}">⬇️ Excel export</a>
+        </div>
+        <h2>Kitöltött űrlap részletei</h2>
+        <h3>{{ partner.name }} | {{ template.name }} | {{ response.submitted_at.strftime('%Y.%m.%d %H:%M') }}</h3>
+
+        {% for a in answers %}
+        <div class="question">
+            <div class="label">{{ loop.index }}. {{ questions[a.question_id] }}</div>
+            <div class="score">Pontszám: {{ a.score }}</div>
+            {% if a.comment %}
+            <div class="comment">Megjegyzés: {{ a.comment }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

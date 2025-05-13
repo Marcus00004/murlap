@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Űrlap létrehozása</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; padding: 2rem; background-color: #f7f9fc; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        h2 { text-align: center; }
+        input[type="text"] { width: 100%; padding: 0.5rem; margin-bottom: 1rem; }
+        .question { margin-bottom: 1rem; }
+        button { padding: 0.5rem 1rem; background-color: #28a745; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Új űrlap létrehozása</h2>
+        <form method="POST">
+            <input type="text" name="name" placeholder="Űrlap neve" required>
+            <div id="questions">
+                <div class="question"><input type="text" name="question_text" placeholder="1. kérdés szövege"></div>
+                <div class="question"><input type="text" name="question_text" placeholder="2. kérdés szövege"></div>
+                <div class="question"><input type="text" name="question_text" placeholder="3. kérdés szövege"></div>
+            </div>
+            <button type="submit">Mentés</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Bejelentkezés</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; background: #eef2f5; padding: 1rem; }
+        .container { max-width: 400px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        h2 { text-align: center; }
+        input { width: 100%; padding: 0.6rem; margin-bottom: 1rem; }
+        button { width: 100%; padding: 0.6rem; background: #007bff; color: white; border: none; border-radius: 5px; }
+        a { display: block; text-align: center; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Bejelentkezés</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Felhasználónév" required>
+            <input type="password" name="password" placeholder="Jelszó" required>
+            <button type="submit">Belépés</button>
+        </form>
+        <a href="{{ url_for('register') }}">Nincs még fiókod? Regisztráció</a>
+    </div>
+</body>
+</html>

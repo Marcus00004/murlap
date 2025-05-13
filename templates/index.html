@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Kezdőlap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; background: #f4f6f8; padding: 1rem; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        h2 { text-align: center; }
+        form.add-form { margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        input[type="text"] { padding: 0.6rem; width: 100%; }
+        button { padding: 0.6rem; background: #007bff; color: white; border: none; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 0.6rem; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #eee; }
+        .logout, .admin-btn {
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: #6c757d;
+            color: white;
+            border-radius: 5px;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            form.add-form { flex-direction: column; }
+            input[type="text"], button { width: 100%; }
+            table, thead, tbody, th, td, tr { display: block; }
+            td::before { content: attr(data-label); font-weight: bold; display: block; }
+            td, th { padding: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a class="logout" href="{{ url_for('logout') }}">Kijelentkezés</a>
+        {% if user.role == 'adminisztrátor' %}
+        <a class="admin-btn" href="{{ url_for('manage_users') }}">Felhasználók kezelése</a>
+        {% endif %}
+
+        <h2>Üdv, {{ user.username }}!</h2>
+
+        {% if user.role == 'felhasználó' %}
+        <form method="POST" action="{{ url_for('add') }}" class="add-form">
+            <input type="text" name="title" placeholder="Új feladat..." required>
+            <button type="submit">Hozzáadás</button>
+        </form>
+        {% endif %}
+
+        <table>
+            <thead><tr><th>Feladat</th><th>Státusz</th>{% if user.role == 'felhasználó' %}<th>Művelet</th>{% endif %}</tr></thead>
+            <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td data-label="Feladat">{{ task.title }}</td>
+                <td data-label="Státusz">{{ task.status }}</td>
+                {% if user.role == 'felhasználó' and task.user_id == user.id %}
+                <td data-label="Művelet">
+                    <form method="POST" action="{{ url_for('update', task_id=task.id) }}">
+                        <select name="status">
+                            <option value="Új" {% if task.status == 'Új' %}selected{% endif %}>Új</option>
+                            <option value="Folyamatban" {% if task.status == 'Folyamatban' %}selected{% endif %}>Folyamatban</option>
+                            <option value="Kész" {% if task.status == 'Kész' %}selected{% endif %}>Kész</option>
+                        </select>
+                        <button type="submit">Frissít</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

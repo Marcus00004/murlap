@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Űrlap kitöltése</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; background: #f7f9fc; padding: 2rem; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        h2 { text-align: center; }
+        .question { margin-bottom: 1.5rem; }
+        textarea { width: 100%; height: 60px; margin-top: 0.5rem; }
+        .rating input[type="radio"] { margin-right: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>{{ template.name }}</h2>
+        <form method="POST" action="{{ url_for('fill_form') }}">
+            <input type="hidden" name="template_id" value="{{ template.id }}">
+            {% for q in template.questions %}
+            <div class="question">
+                <label><strong>{{ loop.index }}. {{ q.text }}</strong></label>
+                <div class="rating">
+                    {% for i in range(q.scale_min, q.scale_max + 1) %}
+                    <label><input type="radio" name="q_{{ q.id }}" value="{{ i }}" required> {{ i }}</label>
+                    {% endfor %}
+                </div>
+                <textarea name="c_{{ q.id }}" placeholder="Megjegyzés (nem kötelező)"></textarea>
+            </div>
+            {% endfor %}
+            <button type="submit">Űrlap mentése</button>
+        </form>
+    </div>
+</body>
+</html>

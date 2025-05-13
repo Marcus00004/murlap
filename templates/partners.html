@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Partnerek kezelése</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f2f5;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0.6rem;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        input, button {
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            width: 100%;
+        }
+        .form-section {
+            margin-top: 2rem;
+        }
+        form.inline {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Partnerek kezelése</h2>
+
+        <table>
+            <tr>
+                <th>Név</th>
+                <th>Cím</th>
+                <th>Kapcsolattartó</th>
+                <th>Művelet</th>
+            </tr>
+            {% for partner in partners %}
+            <tr>
+                <form method="POST" action="{{ url_for('update_partner', partner_id=partner.id) }}">
+                    <td><input type="text" name="name" value="{{ partner.name }}" required></td>
+                    <td><input type="text" name="address" value="{{ partner.address }}"></td>
+                    <td><input type="text" name="contact" value="{{ partner.contact }}"></td>
+                    <td>
+                        <button type="submit">Mentés</button>
+                        <a href="{{ url_for('delete_partner', partner_id=partner.id) }}">Törlés</a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="form-section">
+            <h3>Új partner hozzáadása</h3>
+            <form method="POST" action="{{ url_for('add_partner') }}">
+                <input type="text" name="name" placeholder="Partner neve" required>
+                <input type="text" name="address" placeholder="Cím">
+                <input type="text" name="contact" placeholder="Kapcsolattartó">
+                <button type="submit">Hozzáadás</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

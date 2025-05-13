@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Űrlap kiválasztás</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; background-color: #eef2f5; padding: 1rem; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        h2 { text-align: center; }
+        select, button { width: 100%; padding: 0.5rem; margin-bottom: 1rem; }
+        .buttons { display: flex; flex-direction: column; gap: 0.5rem; }
+        @media (min-width: 600px) {
+            .buttons { flex-direction: row; justify-content: space-between; }
+            button { width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Űrlap kitöltés</h2>
+        <form method="POST">
+            <label for="partner_id">Partner:</label>
+            <select name="partner_id" required>
+                {% for p in partners %}
+                <option value="{{ p.id }}">{{ p.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="template_id">Űrlap:</label>
+            <select name="template_id" required>
+                {% for t in templates %}
+                <option value="{{ t.id }}">{{ t.name }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="buttons">
+                <button type="button" onclick="window.location.href='/'">Mégse</button>
+                <button type="submit">Tovább</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
